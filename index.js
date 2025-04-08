@@ -51,6 +51,16 @@ app.post("/new-referral", async (req, res) => {
   }
 });
 
+app.get("/referrals", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM referrals ORDER BY id DESC LIMIT 10");
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 app.listen(process.env.PORT || 3000, () => {
   console.log("✅ API running and connected to PostgreSQL");
 });
