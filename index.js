@@ -34,7 +34,7 @@ app.post("/new-referral", async (req, res) => {
       const sql = `UPDATE referrals SET ${setClause} WHERE phone_number = $${fields.length + 1}`;
       await db.query(sql, [...values, phone_number]);
 
-      return res.json({ success: true, action: "updated", phone_number });
+      return res.json({ success: true, action: "created", phone_number });
     } else {
       // Insert
       const fields = Object.keys(data);
