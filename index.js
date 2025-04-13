@@ -26,7 +26,8 @@ app.post("/new-referral", async (req, res) => {
       const fields = Object.keys(data).filter(key => key !== "phone_number");
       const values = fields.map(field => data[field]);
       if (fields.length === 0) {
-        return res.status(400).json({ error: "No fields to update" });
+        return res.json({ success: true, action: "created", phone_number });
+        //return res.status(400).json({ error: "No fields to update" });
       }
 
       const setClause = fields.map((field, idx) => `${field} = $${idx + 1}`).join(", ");
