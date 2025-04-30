@@ -61,6 +61,23 @@ app.get("/referrals", async (req, res) => {
   }
 });
 
+app.get("/referral/:phone", async (req, res) => {
+  const phone_number = req.params.phone;
+
+  try {
+    const result = await db.query("SELECT * FROM referrals WHERE phone_number = $1", [phone_number]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Referral not found for this phone number" });
+    }
+
+    res.json(result.rows[0]); // Return the single record
+  } catch (error) {
+    res.status(500).json({ error: "Database error", details: error.message });
+  }
+});
+
+
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("✅ API running and connected to PostgreSQL");
